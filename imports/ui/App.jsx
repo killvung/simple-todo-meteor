@@ -66,9 +66,16 @@ App.propTypes = {
 	tasks: PropTypes.array.isRequired,
 };
 
+/*
+* Create a "data container" to feed Meteor's reactive data 
+* into React's component hierarchy.
+*/ 
 export default createContainer(() => {
+	// To use data from a Meteor collection inside a React component
+	// Change "createdAt" attribute to negative to the task in descending order (The latest first)
 	return {
-		tasks: Tasks.find({}).fetch(),
+
+		tasks: Tasks.find({}, {sort:{ createdAt: -1 }}).fetch(),
 	};
 }, App);
 
