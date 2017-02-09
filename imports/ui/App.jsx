@@ -20,9 +20,9 @@ class App extends Component {
 		});
 
 		//Clear up after yourself 
-		ReactDOM.findDOMNode(this.refs.textIntpu).value = '';
+		ReactDOM.findDOMNode(this.refs.textInput).value = '';
 
-		
+
 	}
 	//Use MongoDB to get the date instead
 	// getTasks(){
