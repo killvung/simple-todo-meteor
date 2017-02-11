@@ -16,6 +16,7 @@ class App extends Component {
 
 		this.state = {
 			hideCompleted: false,
+			trumpDisplay: false,
 		};
 	}
 
@@ -43,6 +44,13 @@ class App extends Component {
 			hideCompleted: !this.state.hideCompleted,
 		});
 	}
+
+	toggleTrump() {
+		this.setState({
+			trumpDisplay: !this.state.trumpDisplay,
+		});
+
+	}
 	//Use MongoDB to get the date instead
 	// getTasks(){
 	// 	return [
@@ -51,6 +59,16 @@ class App extends Component {
 	// 		{ _id: 3, text: 'Task 3'}
 	// 	];
 	// }
+
+	renderTrump(){
+		if(this.state.trumpDisplay){
+			return (
+				<div>
+					<img height="100%" width="100%" src="http://blogs-images.forbes.com/robertwood/files/2016/02/Trump1.jpg"></img>
+				</div>
+			);
+		}
+	}
 
 	renderTasks(){
 		//Check whether tasks had been completed or not
@@ -80,14 +98,24 @@ class App extends Component {
 
 					<label className="hide-completed">
 						<input
-							type="checkbox"
+							type="checkbox"							
 							readOnly
-							checked={this.state.hideCompleted}
+							checked={this.state.hideCompleted}														
 							onClick={this.toggleHideCompleted.bind(this)}
 						/>
 					Hide Completed Tasks
 					</label>
 
+					<label className="hide-trump">
+						<input
+							type="checkbox"
+							readOnly							
+							checked={this.state.trumpDisplay}
+							onClick={this.toggleTrump.bind(this)}
+							
+						/>
+					Display Donald Trump
+					</label>
 
 					<form className="new-task" onSubmit={this.handleSubmit.bind(this)} >
 						<input
@@ -97,7 +125,7 @@ class App extends Component {
 						/>
 					</form>
 				</header>
-
+				{this.renderTrump()}
 				<ul>
 					{this.renderTasks()}
 				</ul>

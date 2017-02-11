@@ -106,6 +106,9 @@ li.private {
 header .hide-completed {
   float: right;
 }
+header .hide-trump {
+  float: right;
+}
 
 .toggle-private {
   margin-left: 5px;
