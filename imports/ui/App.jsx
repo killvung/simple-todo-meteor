@@ -8,6 +8,17 @@ import Task from './Task.jsx';
 
 //App component - represents the whole app
 class App extends Component {
+
+	//Initial state mainly
+	constructor(props){
+		super(props);
+
+
+		this.state = {
+			hideCompleted: false,
+		};
+	}
+
 	handleSubmit(event){
 		event.preventDefault();
 
@@ -21,8 +32,13 @@ class App extends Component {
 
 		//Clear up after yourself 
 		ReactDOM.findDOMNode(this.refs.textInput).value = '';
+	}
 
-
+	//Change the state of the hideCompleted to false/true, so render method can re-render from renderTasks()
+	toggleHideCompleted() {
+		this.setState({
+			hideCompleted: !this.state.hideCompleted,
+		});
 	}
 	//Use MongoDB to get the date instead
 	// getTasks(){
@@ -34,16 +50,41 @@ class App extends Component {
 	// }
 
 	renderTasks(){
-		return this.props.tasks.map((task) => (			
+		//Check whether tasks had been completed or not
+		let filteredTasks = this.props.tasks;
+
+		//If the client clicked on the Hide Completed Tasks checked box, then perform filtering
+		if(this.state.hideCompleted){
+			filteredTasks = filteredTasks.filter(task => !task.checked);
+		}
+		return filteredTasks.map((task) => (
 			<Task key={task._id} task={task} />
 		));
+		// Well, I wished it's that simple to return all the tasks
+		// return this.props.tasks.map((task) => (			
+		// 	<Task key={task._id} task={task} />
+		// ));
 	}
 
 	render(){
+		//Added a tickbox button to hide all the completed tasks
+		//When it clicked, it performed toggleHideCompleted function
 		return (
 			<div className="container">
 				<header>
 					<h1> Todo List</h1>
+
+					
+					<label className="hide-completed">
+						<input
+							type="checkbox"
+							readOnly
+							checked={this.state.hideCompleted}
+							onClick={this.toggleHideCompleted.bind(this)}
+						/>
+					Hide Completed Tasks
+					</label>
+
 
 					<form className="new-task" onSubmit={this.handleSubmit.bind(this)} >
 						<input

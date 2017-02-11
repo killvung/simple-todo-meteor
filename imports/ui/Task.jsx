@@ -6,7 +6,7 @@ import { Tasks } from '../api/tasks.js';
 export default class Task extends Component{	
 
 	//Activate the selected data in $set in MongoDB when the task is chosen 
-	toggleChecked(){		
+	toggleChecked(){				
 		Tasks.update(this.props.task._id,{
 			$set: { checked: !this.props.task.checked },
 		});
