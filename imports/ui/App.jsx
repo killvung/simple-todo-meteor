@@ -63,6 +63,7 @@ class App extends Component {
 		return filteredTasks.map((task) => (
 			<Task key={task._id} task={task} />
 		));
+		
 		// Well, I wished it's that simple to return all the tasks
 		// return this.props.tasks.map((task) => (			
 		// 	<Task key={task._id} task={task} />
@@ -75,9 +76,8 @@ class App extends Component {
 		return (
 			<div className="container">
 				<header>
-					<h1> Todo List</h1>
+					<h1> Todo List {this.props.incompleteCount}</h1>
 
-					
 					<label className="hide-completed">
 						<input
 							type="checkbox"
@@ -108,6 +108,7 @@ class App extends Component {
 
 App.propTypes = {
 	tasks: PropTypes.array.isRequired,
+	incompleteCount: PropTypes.number.isRequired,
 };
 
 /*
@@ -119,6 +120,7 @@ export default createContainer(() => {
 	// Change "createdAt" attribute to negative to the task in descending order (The latest first)
 	return {
 		tasks: Tasks.find({}, {sort:{ createdAt: -1 }}).fetch(),
+		incompleteCount: Tasks.find({ checked:{ $ne: true} }).count(),
 	};
 }, App);
 
