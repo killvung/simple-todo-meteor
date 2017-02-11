@@ -25,10 +25,13 @@ class App extends Component {
 		//Find the text field via the React ref
 		const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
 
-		//Create and submit the new data transffered from the text field
-		Tasks.insert({
-			text,createdAt:  new Date(), //current time
-		});
+		//Added it to the database if it's not empty
+		if (text != ''){
+			//Create and submit the new data transffered from the text field
+			Tasks.insert({
+				text,createdAt:  new Date(), //current time
+			});	
+		}
 
 		//Clear up after yourself 
 		ReactDOM.findDOMNode(this.refs.textInput).value = '';
